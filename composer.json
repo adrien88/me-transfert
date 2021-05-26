@@ -1,0 +1,21 @@
+{
+    "name": "metransfert/metransfert",
+    "description": "Own file share app !",
+    "type": "project",
+    "license": "GPL 3.0",
+    "authors": [
+        {
+            "name": "Adrien Boilley",
+            "email": "adrien.boilley@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.3",
+        "doctrine/orm": "^2.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    }
+}
