@@ -2,65 +2,36 @@
 
 namespace App;
 
+use App\controllers\Page;
 use ReflectionClass;
+use ReflectionMethod;
 
-
-// use App\controllers\Page;
-use Attribute;
-
-#[\Attribute(Attribute::TARGET_METHOD)]
 class Router
 {
-    function __construct(
-        private string $path,
-        private array $methods,
-    ) {
-        // var_dump($path);
-        // var_dump($_SERVER['PATH_INFO']);
-    }
-
     /**
-     * Bind Routable methods in class.
      * 
-     * @param $classname class to bind 
-     * @param 
      */
-    static function bindClass(string $classname = '')
+    function __construct()
     {
-        if (class_exists($classname, true)) {
 
-            if ($reflectionClass = new ReflectionClass($classname)) {
-                // $classAttributes = $reflectionClass->getAttributes(Router::class);
-                // if (!empty($classAttributes)) {
-                //     // $classname = 
-                //     var_dump($classAttributes);
-                // }
-                $classname = explode('\\', $classname);
-                $classname = end($classname);
+        foreach (Route::$routes as $path => $controller)
+            if (strpos($_SERVER['PATH_INFO'], $path) === 0) {
 
-                foreach ($reflectionClass->getMethods() as $method) {
-                    $attr = $method->getAttributes(Router::class);
-                    if (isset($attr[0])) {
-                        $attr = $attr[0];
+                $slug = str_replace($path, '', $_SERVER['PATH_INFO']);
 
-                        var_dump($attr->getArguments());
-                        $route = $attr->newInstance();
-                    }
+                $reflectionClass =  array_shift($controller);
+                $reflexionMethod =  array_shift($controller);
+
+                if ('__construct' === $reflexionMethod->getName()) {
+                    return $reflectionClass->newInstance($slug);
+                } // 
+                else if ($reflexionMethod->isStatic()) {
+                    return call_user_func_array([$reflectionClass->getName(), $reflexionMethod->getName()], []);
+                } //  
+                else {
+                    $controller = $reflectionClass->newInstance();
+                    return $controller->$controller[1]();
                 }
             }
-        }
-    }
-
-    /**
-     * To make methods routable with anotations.
-     * > #[Router('/{slug}', methods: ["GET"])]
-     * 
-     * @param array  list of paths to bind
-     * @return void  
-     */
-    static function route(array $routes = []): void
-    {
-        foreach ($routes as $path)
-            self::bindClass($path);
     }
 }
