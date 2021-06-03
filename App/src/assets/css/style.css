@@ -1,0 +1,85 @@
+.success {
+  color: darkgreen;
+  border-color: darkgreen;
+  background-color: lightgreen; }
+
+.warning {
+  color: darkorange;
+  border-color: darkorange;
+  background-color: lightyellow; }
+
+.alert {
+  color: darkred;
+  border-color: darkred;
+  background-color: seashell; }
+
+.info {
+  color: darkblue;
+  border-color: darkblue;
+  background-color: lightblue; }
+
+.primary {
+  color: blue;
+  border-color: blue;
+  background-color: lightblue; }
+
+.secondary {
+  color: dimgray;
+  border-color: dimgray;
+  background-color: lightgray; }
+
+body {
+  margin: 0px;
+  background: linear-gradient(lightgrey, dimgray);
+  background-attachment: fixed;
+  color: #333; }
+
+.core {
+  padding: 1em;
+  width: 80%;
+  margin: auto; }
+
+header > div,
+footer > div {
+  background-color: gainsboro;
+  color: #333; }
+
+main > div {
+  background-color: white; }
+
+form fieldset {
+  background-color: lightgrey;
+  border-color: white; }
+form label {
+  padding: 0.5em; }
+form input {
+  padding: 0.5em; }
+form button {
+  padding: 0.25em; }
+
+nav {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  background-color: lightslategray; }
+  nav > div {
+    padding: 0em;
+    width: 80%;
+    margin: auto; }
+    nav > div a {
+      display: inline-block;
+      color: white;
+      text-decoration: none;
+      padding: 0.5em; }
+      nav > div a:hover {
+        color: darkslategrey;
+        background-color: lightsteelblue; }
+
+footer div {
+  display: flex;
+  justify-content: space-around;
+  text-align: center; }
+  footer div div {
+    display: block; }
+
+/*# sourceMappingURL=style.css.map */

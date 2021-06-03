@@ -1,0 +1,86 @@
+@import "colors";
+@import "sizes";
+
+body {
+    margin: 0px;
+    background: linear-gradient(lightgrey, dimgray);
+    background-attachment: fixed;
+    color: #333;
+}
+
+.core {
+    padding: 1em;
+    width: 80%;
+    margin: auto;
+}
+
+header,
+footer {
+    & > div {
+        background-color: gainsboro;
+        color: #333;
+    }
+}
+
+main {
+    & > div {
+        background-color: white;
+    }
+}
+
+form {
+    fieldset {
+        background-color: lightgrey;
+        border-color: white;
+    }
+
+    label {
+        padding: 0.5em;
+        // display: block;
+    }
+
+    input {
+        padding: 0.5em;
+    }
+
+    button {
+        padding: 0.25em;
+    }
+}
+
+nav {
+    // position: sticky;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+
+    background-color: lightslategray;
+
+    & > div {
+        padding: 0em;
+        width: 80%;
+        margin: auto;
+        a {
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+            padding: 0.5em;
+
+            &:hover {
+                color: darkslategrey;
+                background-color: lightsteelblue;
+            }
+        }
+    }
+}
+
+footer {
+    div {
+        display: flex;
+        justify-content: space-around;
+        text-align: center;
+        div {
+            display: block;
+        }
+    }
+}

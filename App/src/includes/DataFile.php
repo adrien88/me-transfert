@@ -6,17 +6,17 @@ use Exception;
 
 class DataFile
 {
-    const FOLDER = 'App/data/';
-
     private string $folder;
+    private string $filename = 'default.txt';
     private array $data;
 
-    function __construct(string $folder = 'App\Class')
+    function __construct(string $name = null)
     {
-        $this->folder = self::FOLDER . $folder . '::';
-        if (!file_exists($folder) && !mkdir($folder, 0600, true)) {
-            throw new Exception('PHP can\'t write \'' . $folder . '\' folder.');
-            die();
+        var_dump(get_called_class());
+        $this->folder = 'App/data/' . get_called_class() . '/';
+        if (isset($name)) $this->filename = $name;
+        if (!file_exists($this->folder)) {
+            mkdir($this->folder, 0766, true);
         }
     }
 
@@ -46,9 +46,11 @@ class DataFile
     /**
      * Save data in file
      */
-    function save(string $name)
+    function save(string $name = null)
     {
-        $path = $this->folder . $name;
+        $path = $this->folder . ($name ?? $this->filename);
+        var_dump($path);
+        if (isset($name)) $this->filename = $name;
         $data = json_encode($this->data, JSON_PRETTY_PRINT);
         return file_put_contents($path, $data);
     }
@@ -56,10 +58,11 @@ class DataFile
     /**
      * 
      */
-    function load(string $name)
+    function load(string $name = null)
     {
-        $path = $this->folder . $name;
+        $path = $this->folder . ($name ?? $this->filename);
         if (file_exists($path)) {
+            if (isset($name)) $this->filename = $name;
             $data = file_get_contents($path);
             $this->data = json_decode($data);
         }
@@ -68,11 +71,35 @@ class DataFile
     /**
      * 
      */
-    function unlink(string $name)
+    function exists(string $name = null)
     {
-        $path = $this->folder . $name;
+        $path = $this->folder . ($name ?? $this->filename);
+        return file_exists($path);
+    }
+
+    /**
+     * 
+     */
+    function unlink(string $name = null)
+    {
+        $path = $this->folder . ($name ?? $this->filename);
         if (file_exists($path)) {
             unlink($path);
+        }
+    }
+
+    /**
+     * 
+     */
+    function parseEntities()
+    {
+        $entities = (array) include __DIR__ . '/models/entities/Pages.php';
+        foreach ($entities as $entitie) {
+            $newObj = new self();
+            foreach ($entitie as $key => $value)
+                $newObj->$key = $value;
+            // if (!$this->exists($newObj->filename)) 
+            $newObj->save();
         }
     }
 }

@@ -2,29 +2,48 @@
 
 namespace App\controllers;
 
-use App\Router;
+use App\Route;
+use App\models\Page as ModelsPage;
+use App\views\Page as ViewsPage;
 
-// #[Router(__CLASS__)]
+#[Route('page/')]
 class Page
 {
 
-    #[Router('page/{slug}', methods: ["GET"])]
+
+    function __construct()
+    {
+    }
+
+    #[Route('')]
+    function default($slug = null)
+    {
+        $this->read($slug);
+    }
+
+    /**
+     * Read a page
+     */
+    #[Route('read/')]
     function read($slug = null)
     {
-        var_dump('test');
+        $page = new ModelsPage($slug, 'App/src/assets/html/index.php');
+        new ViewsPage($page);
     }
 
-    #[Router('page/add', methods: ["GET", "POST"])]
-    function add()
+    #[Route('add/')]
+    function add($slug = null)
     {
+        $filename = '../App/src/assets/html/' . $slug;
     }
 
-    #[Router('page/edit/{slug}', methods: ["GET", "POST"])]
+    #[Route('edit/')]
     function edit($slug)
     {
+        var_dump($slug);
     }
 
-    #[Router('page/delete/{slug}', methods: ["GET"])]
+    #[Route('delete/')]
     function del($slug)
     {
     }
