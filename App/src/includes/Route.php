@@ -40,23 +40,14 @@ class Route
     {
         if (class_exists($classname, true)) {
             if ($reflectionClass = new ReflectionClass($classname)) {
-                self::listenMethods($reflectionClass, $classname);
-            }
-        }
-    }
-
-    /**
-     * 
-     * 
-     */
-    static function listenMethods(\ReflectionClass $reflectionClass, string $classname)
-    {
-        $prefix = self::getReflectionPrefix($reflectionClass);
-        foreach ($reflectionClass->getMethods() as $method) {
-            $attr = $method->getAttributes(self::class);
-            if (isset($attr[0])) {
-                $path = strtolower($prefix . $attr[0]->getArguments()[0]);
-                new self($path, $reflectionClass, $method);
+                $prefix = self::getReflectionPrefix($reflectionClass);
+                foreach ($reflectionClass->getMethods() as $method) {
+                    $attr = $method->getAttributes(self::class);
+                    if (isset($attr[0])) {
+                        $path = strtolower($prefix . $attr[0]->getArguments()[0]);
+                        new self($path, $reflectionClass, $method);
+                    }
+                }
             }
         }
     }
