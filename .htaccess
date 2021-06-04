@@ -1,0 +1,29 @@
+##
+## Rewrite engine
+##
+
+RewriteEngine on
+AcceptPathInfo On
+
+##
+## If empty string
+## 
+
+RewriteCond %{QUERY_STRING} ^$
+RewriteRule ^$ /public/index.php
+
+##
+## If it's not a file and not a directory.
+##
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/index.php/$1
+
+##
+## Forbid access to ini files
+##
+
+<FilesMatch "\.ini$">
+    require all denied
+</FilesMatch>
