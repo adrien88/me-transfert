@@ -1,7 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<!-- 
+use App\models\Page;
+
+if ($page instanceof Page) :
+
+?>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <!-- 
     Souviens toi !
     Souviens toi de ce 5 de novembre.
     De ses poudres et de sa conspiration. 
@@ -9,67 +16,75 @@
     À l'oubli je ne peux me résoudre.
 -->
 
-<head>
+    <head>
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Me-transfert</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Me-transfert</title>
 
-    <link rel="stylesheet" href="<?= ASSETS ?>/css/style.css">
+        <link rel="stylesheet" href="<?= ASSETS ?>/css/style.css">
 
-</head>
+    </head>
 
-<body>
-    <header>
-        <div class="core">
-            <h1>Me-transfert !</h1>
-            <p>Programme pour partager des fichier...</p>
-        </div>
-    </header>
-    <nav>
-        <div class="core">
-            <a href="<?= ROUTE ?>">accueil</a> <?= $menu ?>
-        </div>
-    </nav>
-    <main>
-        <div class="core">
-            <?= file_get_contents(__DIR__ . '/pages/' . $this->filename); ?>
-        </div>
-    </main>
-
-    <footer>
-        <div class="core">
-            <div>
-                <form action="">
-                    <input type="text">
-                    <input type="submit" value="Chercher">
-                </form>
+    <body>
+        <header>
+            <div class="core">
+                <h1> <?= $page->title; ?></h1>
+                <p>Programme pour partager des fichier...</p>
             </div>
-            <div>
-                <h4>
-                    Boilley Adrien © 2021
-                </h4>
-                <p>
-                    Touts droits réservés.
-                </p>
+        </header>
+        <nav>
+            <div class="core">
+                <a href="<?= RELPATH ?>">accueil</a> <?= $page->menu ?>
             </div>
-            <div>
-                <ul>
-                    <li>
-                        <a href="http://"> <img src="" alt="Facebook"></a>
-                    </li>
-                    <li>
-                        <a href="http://"> <img src="" alt="Twitter"></a>
-                    </li>
-                    <li>
-                        <a href="http://"> <img src="" alt="LinkedIn"></a>
-                    </li>
-                </ul>
+        </nav>
+        <main>
+            <div class="core">
+                <?php
+                echo $page->content;
+                if (null !== ($callable = $page->callback))
+                    $callable();
+                ?>
+
             </div>
-        </div>
-    </footer>
+        </main>
 
-</body>
+        <footer>
+            <div class="core">
+                <div>
+                    <form action="">
+                        <input type="text">
+                        <input type="submit" value="Chercher">
+                    </form>
+                </div>
+                <div>
+                    <h4>
+                        Boilley Adrien © 2021
+                    </h4>
+                    <p>
+                        Touts droits réservés.
+                    </p>
+                </div>
+                <div>
+                    <ul>
+                        <li>
+                            <a href="http://"> <img src="" alt="Facebook"></a>
+                        </li>
+                        <li>
+                            <a href="http://"> <img src="" alt="Twitter"></a>
+                        </li>
+                        <li>
+                            <a href="http://"> <img src="" alt="LinkedIn"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
 
-</html>
+    </body>
+
+    </html>
+
+<?php
+endif;
