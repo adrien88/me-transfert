@@ -49,10 +49,10 @@ form {
 }
 
 nav {
-    // position: sticky;
-    position: fixed;
-    top: 0px;
     width: 100%;
+    position: sticky;
+    // position: fixed;
+    // top: 0px;
 
     background-color: lightslategray;
 

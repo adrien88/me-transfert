@@ -58,9 +58,8 @@ form button {
   padding: 0.25em; }
 
 nav {
-  position: fixed;
-  top: 0px;
   width: 100%;
+  position: sticky;
   background-color: lightslategray; }
   nav > div {
     padding: 0em;

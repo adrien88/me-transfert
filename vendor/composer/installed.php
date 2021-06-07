@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '756fef96004f37a56afc8c389c76bdbb3d45f13c',
+    'reference' => '456e46edb50cf858bf1364753822185ecaacb656',
     'name' => 'metransfert/metransfert',
   ),
   'versions' => 
@@ -45,7 +45,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '756fef96004f37a56afc8c389c76bdbb3d45f13c',
+      'reference' => '456e46edb50cf858bf1364753822185ecaacb656',
     ),
     'psr/http-message' => 
     array (
