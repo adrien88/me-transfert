@@ -2,88 +2,70 @@
 
 namespace App;
 
+use Error;
 use Exception;
 
-class DataFile
+trait DataFile
 {
     private string $folder;
-    private string $filename = 'default.txt';
-    private array $data;
+    public string $filename = 'default.txt';
 
-    function __construct(string $name = null)
+    /**
+     * 
+     */
+    function init(string $objname = '')
     {
-        var_dump(get_called_class());
-        $this->folder = 'App/data/' . get_called_class() . '/';
-        if (isset($name)) $this->filename = $name;
-        if (!file_exists($this->folder)) {
-            mkdir($this->folder, 0766, true);
+        $this->filename = $objname;
+        $this->makefolder();
+        if (!$this->load()) {
+            $this->menu = '';
+            $this->created = time();
         }
     }
 
     /**
-     * magic setter
-     */
-    function __set($name, $value)
-    {
-        $this->data[$name] = $value;
-    }
-
-    function __get($name)
-    {
-        return $this->data[$name];
-    }
-
-    function __isset($name)
-    {
-        return isset($this->data[$name]);
-    }
-
-    function __unset($name)
-    {
-        unset($this->data[$name]);
-    }
-
-    /**
      * Save data in file
+     * 
      */
-    function save(string $name = null)
+    function save()
     {
-        $path = $this->folder . ($name ?? $this->filename);
-        var_dump($path);
-        if (isset($name)) $this->filename = $name;
-        $data = json_encode($this->data, JSON_PRETTY_PRINT);
+        $path = $this->folder . $this->filename . '.json';
+        $data = json_encode(get_object_vars($this), JSON_PRETTY_PRINT);
         return file_put_contents($path, $data);
     }
 
     /**
      * 
      */
-    function load(string $name = null)
+    function load()
     {
-        $path = $this->folder . ($name ?? $this->filename);
+        $path = $this->folder . $this->filename . '.json';
         if (file_exists($path)) {
-            if (isset($name)) $this->filename = $name;
             $data = file_get_contents($path);
-            $this->data = json_decode($data);
+            $data = json_decode($data, JSON_OBJECT_AS_ARRAY);
+            foreach ($data as $attr => $value)
+                $this->$attr = $value;
+            return true;
         }
+        return false;
     }
 
     /**
      * 
      */
-    function exists(string $name = null)
+    function exist()
     {
-        $path = $this->folder . ($name ?? $this->filename);
+        $path = $this->folder . $this->filename . '.json';
         return file_exists($path);
     }
 
     /**
      * 
      */
-    function unlink(string $name = null)
+    function unlink()
     {
-        $path = $this->folder . ($name ?? $this->filename);
-        if (file_exists($path)) {
+        $path = $this->folder . $this->filename . '.json';
+        if ($this->exist()) {
             unlink($path);
         }
     }
@@ -91,15 +73,20 @@ class DataFile
     /**
      * 
      */
-    function parseEntities()
+    static function list()
     {
-        $entities = (array) include __DIR__ . '/models/entities/Pages.php';
-        foreach ($entities as $entitie) {
-            $newObj = new self();
-            foreach ($entitie as $key => $value)
-                $newObj->$key = $value;
-            // if (!$this->exists($newObj->filename)) 
-            $newObj->save();
+        $folder = 'App/data/' . str_replace('\\', '-', get_class()) . '/*';
+        return glob($folder);
+    }
+
+    /**
+     * 
+     */
+    function makefolder()
+    {
+        $this->folder = 'App/data/' . str_replace('\\', '-', get_class()) . '/';
+        if (!file_exists($this->folder) && !mkdir($this->folder, 0766, true)) {
+            throw new Exception('Impossible de créer le dossier');
         }
     }
 }
