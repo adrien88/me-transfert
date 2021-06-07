@@ -9,12 +9,12 @@ if ($page instanceof Page) :
     <html lang="en">
 
     <!-- 
-    Souviens toi !
-    Souviens toi de ce 5 de novembre.
-    De ses poudres et de sa conspiration. 
-    Souviens toi de ce jour, souviens t'en !  
-    À l'oubli je ne peux me résoudre.
--->
+        Souviens toi !
+        Souviens toi de ce 5 de novembre.
+        De ses poudres et de sa conspiration. 
+        Souviens toi de ce jour, souviens t'en !  
+        À l'oubli je ne peux me résoudre.
+    -->
 
     <head>
 
@@ -36,15 +36,27 @@ if ($page instanceof Page) :
         </header>
         <nav>
             <div class="core">
-                <a href="<?= RELPATH ?>">accueil</a> <?= $page->menu ?>
+                <!-- <a href="<?= RELPATH ?>">accueil</a> -->
+                <?php
+                foreach (Page::list() as $file) {
+                    $file = substr(basename($file), 0, -5);
+                    if (!strpos(URL, $file)) {
+
+                ?>
+                        <a href="<?= RELPATH . '/page/' . $file ?>"><?= substr($file, 0, -5); ?></a>
+                <?php
+                    }
+                }
+                ?>
             </div>
         </nav>
         <main>
             <div class="core">
                 <?php
-                echo $page->content;
-                if (null !== ($callable = $page->callback))
-                    $callable();
+                if ('' != $page->include)
+                    include $page->include;
+                else
+                    echo $page->content;
                 ?>
 
             </div>
