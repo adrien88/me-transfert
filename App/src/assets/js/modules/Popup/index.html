@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <button id="cookies"> Give me cookies ! </button>
+
+    <script type="module" >
+
+        import { HTMLPopupElement } from "./class-HTMLPopupElement.js";
+        customElements.define("popup-elemnt", HTMLPopupElement);
+
+        document.getElementById('cookies').addEventListener('click', ()=>{
+            let pop = new HTMLPopupElement('MyPopup', 'Cookies !');
+            let img = document.createElement('img');
+            img.id = './Give_That_Man_A_Cookie.jpg';
+            img.src = './Give_That_Man_A_Cookie.jpg';
+            pop.add(img);
+            let key = pop.add("Tu veux des Cookies ? Non ? Tans pis pour ta gueule !");
+            // console.log(key);
+            pop.del(key); 
+            pop.push();
+        });
+
+    </script>
+</body>
+
+</html>
