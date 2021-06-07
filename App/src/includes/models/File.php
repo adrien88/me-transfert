@@ -11,6 +11,7 @@ class File
         private string $uri = 'file/foo.php',
     ) {
         $this->filename = basename($uri);
+        // $this->content = 
     }
 
     /**

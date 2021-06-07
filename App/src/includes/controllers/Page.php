@@ -2,7 +2,7 @@
 
 namespace App\controllers;
 
-use App\Route;
+use App\Router\Route;
 use App\models\Page as ModelsPage;
 use App\views\Page as ViewsPage;
 
@@ -10,11 +10,9 @@ use App\views\Page as ViewsPage;
 class Page
 {
 
-
-    function __construct()
-    {
-    }
-
+    /**
+     * 
+     */
     #[Route('')]
     function default($slug = null)
     {
@@ -23,28 +21,39 @@ class Page
 
     /**
      * Read a page
+     * 
      */
     #[Route('read/')]
     function read($slug = null)
     {
-        $page = new ModelsPage($slug, 'App/src/assets/html/index.php');
-        new ViewsPage($page);
+        $page = new ModelsPage($slug);
+        new ViewsPage($page, 'App/src/assets/html/index.php');
     }
 
+    /**
+     * Add 
+     * 
+     * @param string $slug
+     */
     #[Route('add/')]
-    function add($slug = null)
+    function add(string $slug = null)
     {
         $filename = '../App/src/assets/html/' . $slug;
     }
 
+    /**
+     * 
+     */
     #[Route('edit/')]
-    function edit($slug)
+    function edit(string $slug = null)
     {
-        var_dump($slug);
     }
 
+    /**
+     * 
+     */
     #[Route('delete/')]
-    function del($slug)
+    function del(string $slug = null)
     {
     }
 }
