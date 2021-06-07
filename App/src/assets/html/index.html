@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="{{ head.lang }}">
+
+<!-- 
+        Souviens toi !
+        Souviens toi de ce 5 de novembre.
+        De ses poudres et de sa conspiration. 
+        Souviens toi de ce jour, souviens t'en !  
+        À l'oubli je ne peux me résoudre.
+    -->
+
+<head>
+
+    <meta charset="{{ head.charset }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} | {{ head.title }}</title>
+
+    <link rel="stylesheet" href="{{ meta.assets }}/css/style.css">
+
+</head>
+
+<body>
+    <header>
+        <div class="core">
+           
+        </div>
+    </header>
+    <nav>
+        <div class="core">
+            {% for text, link in navlinks %}
+                <a href="{{ link }}">{{ text }}</a>
+            {% endfor %}
+        </div>
+    </nav>
+    <main>
+        <div class="core">
+
+            {% block article %}{% endblock %}
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="core">
+            <div>
+                <form action="">
+                    <input type="text">
+                    <input type="submit" value="Chercher">
+                </form>
+            </div>
+            <div>
+                <h4>
+                    Boilley Adrien © 2021
+                </h4>
+                <p>
+                    Touts droits réservés.
+                </p>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        <a href="http://"> <img src="" alt="Facebook"></a>
+                    </li>
+                    <li>
+                        <a href="http://"> <img src="" alt="Twitter"></a>
+                    </li>
+                    <li>
+                        <a href="http://"> <img src="" alt="LinkedIn"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
