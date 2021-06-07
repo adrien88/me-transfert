@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Router;
 
-use App\controllers\Page;
 use ReflectionClass;
 
 use Attribute;

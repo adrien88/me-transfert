@@ -1,7 +1,6 @@
 <?php
 
-namespace App;
-
+namespace App\Router;
 
 class Router
 {
@@ -10,18 +9,21 @@ class Router
      * 
      * 
      */
-    function __construct(string $default = '/page/accueil.php')
+    function __construct()
     {
-        $url = $_SERVER['PATH_INFO'] ?? $default;
+
+
+        // echo $url;
+        // echo '<pre>' . print_r(Route::$routes, 1) . '</pre>';
+
         foreach (Route::$routes as $path => $controller) {
-            if (strpos($url, $path) === 0) {
+            if (strpos(URL, $path) === 0) {
                 $reflectionClass =  array_shift($controller);
                 $reflexionMethod =  array_shift($controller);
-                $slug = str_replace($path, '', $url);
+                $slug = str_replace($path, '', URL);
             }
         }
 
-        // echo '<pre>' . print_r(Route::$routes, 1) . '</pre>';
 
         if (isset($reflexionMethod))
             if ('__construct' === $reflexionMethod->getName()) {
