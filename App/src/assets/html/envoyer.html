@@ -4,7 +4,7 @@
 {% block article %}
 
     <h2>Envoyez des fichiers</h2>
-    <form action="{{ meta.routes }}/file/send/" method="POST" enctype="multipart/form-data">
+    <form id="FileForm" action="{{ meta.routes }}/file/send/" method="POST" enctype="multipart/form-data">
         <h3>Vous</h3>
         <fieldset>
             <label for="userlogin"> <b>Votre ID.</b> (pseudo, diminutif, initiales, blase...)</label><br>
@@ -32,6 +32,42 @@
             <input type="password" id="file_password_1"> -->
         </fieldset>
         <!-- <button onclick="" disabled>+ ajouter un un fichier</button> -->
+
+        <fieldset>
+            drad & drop
+            <!-- div to put a drop module -->
+            <div id="drop-module">
+                
+            </div>
+        </fieldset>
+
+        <script type="module">
+            
+            import { DragAndDrop } from '{{ meta.assets }}/js/modules/Drag&drop/class-DragAndDrop.js';
+            new DragAndDrop({
+
+                // tag id : where you want to append the drag&drop
+                DropTagId: "drop-module",
+
+                // forms : form id / is async (depend of form or not)
+                // Form: { id: "", async: false },
+
+                // drop area element properties
+                DropArea: { id: "dropArea", class: "droparea" },
+
+                FileListArea: { id: "FileListArea", class: "FileListArea" },
+                // ThumbsArea: { id: "thumbsArea", class: "thumbsArea" },
+            });
+            let form = document.getElementById('FileForm');
+            
+            
+            form.addEventListener('submit',(e)=>{
+                e.preventDefault();
+                formData = new FormData(form);
+            })
+
+
+        </script>
 
         <h3>Envoyer</h3>
         <fieldset>
