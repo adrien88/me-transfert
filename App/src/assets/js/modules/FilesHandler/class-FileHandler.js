@@ -4,7 +4,6 @@ import { FileList } from "./class-FileList.js";
  *
  */
 export class FileHandler {
-    static FilesList = [];
     static indexByFileName = [];
 
     /**
@@ -12,20 +11,9 @@ export class FileHandler {
      * @param {*} source
      */
     constructor(source = null) {
-        this.uri = null;
-        this.filename = null;
-        this.size = null;
-        this.content = null;
-        this.lastModified = null;
-
-        if (source != null) {
-            if (typeof source == "string")
-                if (source.match(/^https?\:\/\/([\w-_./])+\.[\w\.]{2,}/i))
-                    this.load(source);
-                else
-                    throw new Error(
-                        "Javascript Can't load file from '${source}' cause url has a bad format."
-                    );
+       
+        if (null != source) {
+            if (typeof source == "string") this.load(source);
             else if (source instanceof File) this.import(source);
             else throw new Error("What is it ???");
         }
@@ -36,46 +24,23 @@ export class FileHandler {
      *
      * @param {*} file
      */
-    import(file, callback) {
+    import(file) {
         if (file instanceof File) {
-            this.uri = URL.createObjectURL(file); //  unique key random generator
-            this.filename = file.name;
-            this.type = file.type; // mime: image/jpeg
-            this.imported = Date.now(); // int: date importation
-            this.lastModified = file.lastModified;
-            this.size = file.size; // int size
-            this.blob = file.stream(); // content
+            
 
             /**
              * Object stored : 
                 {
                 "uri": "blob:http://127.0.0.1/c8bb7ce8-d8fe-46bc-bedb-2789d5364763",
-                "filename": "6144294188_762c20ab58_o.jpg",
+                "name": "my_file.jpg",
                 "size": 118946,
-                "content": null,
+                "content": null, ??
                 "lastModified": 1591212300000,
                 "type": "image/jpeg",
                 "imported": 1618480612220,
                 "blob": readableStream
                 }
              */
-
-            /**
-             * escape duplicata
-             */
-            for (const rgt of FileHandler.FilesList) {
-                let mssg =
-                    "L'objet a déjà été importé : souhaitez vous l'écraser ?";
-                if (
-                    rgt.filename == this.filename &&
-                    rgt.lastModified == this.lastModified
-                ) {
-                    if (confirm(mssg)) FileHandler.FilesList.push(this);
-                    else break;                    
-                } else {
-                    FileHandler.FilesList.push(this);
-                }
-            }
         }
     }
 
@@ -85,32 +50,30 @@ export class FileHandler {
      * @param {*} uri
      * @returns this
      */
-    load(uri, callback) {
-        fetch(uri, {
-            method: "GET",
-        })
-            .then((response) => {
-                if (response.ok) return response.blob();
-                else {
-                    console.log("File : " + uri);
-                    console.log("Network error : " + response.statusText);
-                }
+    load(uri) {
+        if (uri.match(/^https?\:\/\/([\w-_./]+)+\.[\w]{2,}/i))
+            fetch(uri, {
+                method: "GET",
             })
-            .then((data) => {
-                console.log(data);
-
-                this.uri = uri;
-                this.filename = uri.split("/")[uri.length - 1];
-
-                // this.content = response.blob();
-                // FileHandler.FilesList.push(this);
-            })
-            .catch((errors) => {
-                console.log(errors);
-            })
-            .finally(() => {
-                if (callback != null) callback(this);
-            });
+                .then((response) => {
+                    if (response.ok) return response.blob();
+                    else {
+                        console.log("File : " + uri);
+                        console.log("Network error : " + response.statusText);
+                    }
+                })
+                .then((data) => {
+                    file = new File(data, uri);
+                    file.uri = uri;
+                    // FileList.set(file);
+                })
+                .catch((errors) => {
+                    console.log(errors);
+                });
+        else
+            throw new Error(
+                "Javascript Can't load file from '${uri}' cause url has a bad format."
+            );
     }
 
     /**

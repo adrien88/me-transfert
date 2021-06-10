@@ -1,41 +1,22 @@
+import { Files } from "./class-Files.js";
 
-
+/**
+ * Class using satic list of Files lists.
+ * /!\ Meta use !
+ */
 export class FileList {
     static list = {};
 
     /**
-     *
-     * @param {*} name
-     * @returns
+     * Return registred list.
+     * 
+     * @param {string} name 
+     * @returns {Files}
      */
-    static get(name) {
-        for (const key in FileList.list)
-            if ((file.key = name)) return FileList.list.name;
-    }
-
-    /**
-     *
-     * @param {*} file
-     */
-    static set(file) {
-        if (file instanceof File) FileList.list[file.name] = file;
-    }
-
-    /**
-     *
-     * @param {*} name
-     */
-    static unset(name) {
-        FileList.list.name = null;
-    }
-
-    /**
-     *
-     * @param {*} name
-     * @returns
-     */
-    static isset(name) {
-        if (FileList.list.name != null) return true;
-        else return false;
+    static getList(name) {
+        if (null == FileList.list[name]){
+            FileList.list[name] = new Files(name);
+        }
+        return FileList.list[name];
     }
 }

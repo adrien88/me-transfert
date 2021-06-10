@@ -1,10 +1,10 @@
 import { FileHandler } from "../FilesHandler/class-FileHandler.js";
 
 export class Thumbs extends HTMLCanvasElement {
+   
     constructor(opts = { id: null, class: "thumbnail" }) {
         customElements.define("thumbnail", DropArea);
         super();
-
         this.id = opts.id;
         this.classList.add(opts.class);
         this.style.display = "inline-block";

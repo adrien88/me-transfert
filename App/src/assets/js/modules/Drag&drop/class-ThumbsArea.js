@@ -11,6 +11,10 @@ export class ThumbsArea extends HTMLElement {
     // assigner ID et class
     this.id = opts.id;
     this.classList.add(opts.class);
+    this.style.display = 'block';
+    this.style.minHeight = '50px';
+    this.style.minWidth = '150px';
+    this.style.border = '1px dotted gray';
   }
 
   refresh() {
@@ -21,10 +25,6 @@ export class ThumbsArea extends HTMLElement {
         let img = new Image(100);
         img.setAttribute("src", file.uri);
         img.style.margin = ".5em";
-
-        // img.addEventListener('click', (event)=>{
-
-        // });
 
         this.appendChild(img);
       }
