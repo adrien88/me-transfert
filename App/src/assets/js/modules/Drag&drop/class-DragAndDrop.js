@@ -1,4 +1,4 @@
-import { FileHandler } from "../FilesHandler/class-FileHandler.js";
+import { ExFile } from "../FilesHandler/class-ExFile.js";
 import { FileList } from "../FilesHandler/class-FileList.js";
 import { FileListArea } from "../FilesHandler/class-FileListArea.js";
 customElements.define("filelist-area", FileListArea);
@@ -14,38 +14,45 @@ customElements.define("thumbs-area", ThumbsArea);
  */
 export class DragAndDrop {
     constructor(param) {
-
-
-        //  drop area
-        this.dropArea = new DropArea(param.DropArea);
+        
         this.list = FileList.getList("class-DragAndDrop");
 
         // ThumbsArea: { id: "thumbsArea", class: "thumbsArea" },
-        if (null != param.ThumbsArea){
+        if (null != param.ThumbsArea) {
             this.ThumbsArea = new ThumbsArea(param.ThumbsArea);
         }
-        
+
         // FileListArea: { id: "thumbsArea", class: "thumbsArea" },
-        if (null != param.FileListArea){
+        if (null != param.FileListArea) {
             param.FileListArea.listname = "class-DragAndDrop";
             this.FileListArea = new FileListArea(param.FileListArea);
         }
 
-        // Form: { id: "", async: false },
-        // if (null != param.Form)
-        //     let form = document.getElementById(param.Form.id);
-
+        this.dropArea = new DropArea(param.DropArea);
         this.dropArea.bind((file) => {
-            file.uri = URL.createObjectURL(file);   //  unique key random generator 
-            file.imported = Date.now();             // int: date importation
-            file.blob = file.stream();              // content
+
+            // Need to bind URL from outer of ExFile : else it crash...
+            // file.uri = URL.createObjectURL(file);
+            
+            if (null != param.Form) {
+                // get form
+                let form = document.getElementById(param.Form.id);
+                // bind url
+                file.url = form.getAttribute("action");
+            }
+            // if is async
+            file.async = param.Form.async ?? false;
+            // files ok
             this.list.set(file);
         });
 
         let dropmodule = document.getElementById(param.DropTagId);
+
         dropmodule.appendChild(this.dropArea);
 
-        // if (null != this.ThumbsArea) dropmodule.appendChild(this.ThumbsArea);
-        if (null != this.FileListArea) dropmodule.appendChild(this.FileListArea);
+        if (null != this.FileListArea)
+            dropmodule.appendChild(this.FileListArea);
     }
+
+
 }

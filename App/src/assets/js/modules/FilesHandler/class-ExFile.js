@@ -6,29 +6,6 @@ export class ExFile {
         } else {
             this.file = new File();
         }
-       
-    }
-
-    /**
-     * Read file as stream.
-     * Alias of File.stream()
-     *
-     * @returns stream
-     */
-    stream() {
-        return this.file.stream();
-    }
-
-    /**
-     * Reaf file as buffer.
-     * Alias of File.arrayBuffer() hineritence of clob Vlasse.
-     * @see https://developer.mozilla.org/en-US/docs/Web/API/Blob/arrayBuffer
-     *
-     * @returns Promise content blob binary data in an arrayBuffer.
-     * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer
-     */
-    async arrayBuffer() {
-        return await this.file.arrayBuffer();
     }
 
     /**
@@ -40,6 +17,8 @@ export class ExFile {
     import(file){
         if (file instanceof File){
             this.file = file;
+            this.uri = URL.createObjectURL(file);
+            this.async = file.async;
             this.name = file.name;
             this.type = file.type;
             this.lastMofified = file.lastMofified;

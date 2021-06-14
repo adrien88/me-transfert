@@ -1,15 +1,17 @@
 import { FileList } from "./class-FileList.js";
 
 export class FileListArea extends HTMLElement {
-    constructor(opts = { id: "FileListArea", class: "FileListArea", listname: ''}) {
+    constructor(
+        opts = { id: "FileListArea", class: "FileListArea", listname: "" }
+    ) {
         // construire le parent (HTMLElement)
         super();
-        
+
         // assigner ID et class
         this.id = opts.id;
         this.classList.add(opts.class);
         this.style.display = "block";
-        
+
         // create file liste
         this.list = FileList.getList(opts.listname);
 
@@ -89,8 +91,8 @@ export class FileListArea extends HTMLElement {
         let del = document.createElement("button");
         del.innerText = "DEL";
         del.addEventListener("click", (e) => {
+            e.preventDefault();
             this.list.unset(key);
-            this.remove(key);
         });
         td.appendChild(del);
         tr.appendChild(td);
@@ -116,8 +118,10 @@ export class FileListArea extends HTMLElement {
      * @param {*} key
      */
     removeFile(key) {
-        for (const child of this.table.children) {
-            if (key === child.id) this.table.removeChild(child);
+        for (const child of this.tbody.children) {
+            if (key === child.id) {
+                this.tbody.removeChild(child);
+            }
         }
     }
 }

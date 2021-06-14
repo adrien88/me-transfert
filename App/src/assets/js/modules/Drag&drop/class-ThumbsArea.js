@@ -1,4 +1,3 @@
-import { FileHandler } from "../FilesHandler/class-FileHandler.js";
 
 export class ThumbsArea extends HTMLElement {
   static listPrinted = [];
@@ -18,19 +17,6 @@ export class ThumbsArea extends HTMLElement {
   }
 
   refresh() {
-    for (const file of FileHandler.FilesList) {
-      if (!ThumbsArea.listPrinted.includes(file.uri)) {
-        ThumbsArea.listPrinted.push(file.uri);
-
-        let img = new Image(100);
-        img.setAttribute("src", file.uri);
-        img.style.margin = ".5em";
-
-        this.appendChild(img);
-      }
-
-      // console.log(file);
-      // this.innerHTML = file.filename;
-    }
+   
   }
 }

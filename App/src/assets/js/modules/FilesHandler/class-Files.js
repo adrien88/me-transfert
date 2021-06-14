@@ -1,12 +1,21 @@
 import { FileList } from "./class-FileList.js";
+import { ExFile } from "./class-ExFile.js";
 
 export class Files {
-    list = {};
     suscribers = [];
 
-    constructor(name) {
+    constructor(name = "MAIN") {
         this.name = name;
         if (null == FileList.list[name]) FileList.list[name] = this;
+        this.list = new Map();
+    }
+
+    /**
+     *
+     * @returns
+     */
+    length() {
+        return this.list.size;
     }
 
     /**
@@ -23,13 +32,8 @@ export class Files {
      * @returns
      */
     get(name) {
-        for (const key in this.list) {
-            if (hash == this.list[key]) {
-                for (const callable of this.suscribers) {
-                    callable("get", hash, this.list.key);
-                }
-                return this.list.key;
-            }
+        if (this.list.has(name)) {
+            return this.list.get(name);
         }
     }
 
@@ -38,10 +42,18 @@ export class Files {
      * @param {*} file
      */
     set(file) {
-        let name = ("" + Math.random() * 1000000).replace(".", "");
-        if (file instanceof File) {
-            this.list[name] = file;
-            for (const callable of this.suscribers) callable("set", name, file);
+        
+        file = new ExFile(file);
+        let name = file.uri.split("/");
+        name = name[name.length - 1];
+
+        this.list.set(name, file);
+
+        console.log(file.async);
+        if (file.async) file.save();
+
+        for (const callable of this.suscribers) {
+            callable("set", name, file);
         }
     }
 
@@ -50,11 +62,13 @@ export class Files {
      * @param {*} name
      */
     unset(name) {
-        if (this.isset(name)) {
-            this.list[name] = null;
+        if (this.list.has(name)) {
+            if (this.get(name).async) this.get(name).unlink();
+
             for (const callable of this.suscribers) {
-                callable("unset", name, null);
+                callable("unset", name, this.get(name));
             }
+            this.list.delete(name);
         }
     }
 
@@ -64,7 +78,6 @@ export class Files {
      * @returns
      */
     isset(key) {
-        if (null != this.list[key]) return true;
-        else return false;
+        return this.list.has(key);
     }
 }

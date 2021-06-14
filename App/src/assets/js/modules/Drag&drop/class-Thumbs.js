@@ -1,4 +1,3 @@
-import { FileHandler } from "../FilesHandler/class-FileHandler.js";
 
 export class Thumbs extends HTMLCanvasElement {
    
