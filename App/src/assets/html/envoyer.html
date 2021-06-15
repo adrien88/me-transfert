@@ -8,7 +8,7 @@
         <h3>Vous</h3>
         <fieldset>
             <label for="userlogin"> <b>Votre ID.</b> (pseudo, diminutif, initiales, blase...)</label><br>
-            <input type="text" name="userelogin" id="userelogin" placeholder="Culcul la Praline !"><br>
+            <input type="text" name="userelogin" id="userelogin" placeholder="George Sand"><br>
 
             <label for="useremail"> <b>Votre email !</b> </label><br>
             <input type="email" name="useremail" id="useremail" placeholder="foo.bar@mail.tld"><br>
@@ -25,24 +25,14 @@
         <!-- <button onclick="" disabled>+ ajouter un destinataire</button> -->
 
         <h3>Fichiers</h3>
-        <fieldset id="addFile">
-            <label for="file_1"><b>Fichier à joindre</b> (2Mb max)</label><br>
-            <input type="file" name="files" id="file_1"><br>
-            <!-- <label for="file_password_1"><b>Mot de passe</b> </label><br>
-            <input type="password" id="file_password_1"> -->
-        </fieldset>
-        <!-- <button onclick="" disabled>+ ajouter un un fichier</button> -->
-
         <fieldset>
-            drad & drop
             <!-- div to put a drop module -->
             <div id="drop-module">
-                
             </div>
         </fieldset>
 
         <script type="module">
-            
+
             import { DragAndDrop } from '{{ meta.assets }}/js/modules/Drag&drop/class-DragAndDrop.js';
             new DragAndDrop({
 
@@ -50,22 +40,14 @@
                 DropTagId: "drop-module",
 
                 // forms : form id / is async (depend of form or not)
-                // Form: { id: "", async: false },
+                Form: { id: "FileForm", async: true },
 
                 // drop area element properties
-                DropArea: { id: "dropArea", class: "droparea" },
+                DropArea: { id: "dropArea", class: "droparea", message:'Click here or drag and drop your files here !' },
 
                 FileListArea: { id: "FileListArea", class: "FileListArea" },
                 // ThumbsArea: { id: "thumbsArea", class: "thumbsArea" },
             });
-            let form = document.getElementById('FileForm');
-            
-            
-            form.addEventListener('submit',(e)=>{
-                e.preventDefault();
-                formData = new FormData(form);
-            })
-
 
         </script>
 

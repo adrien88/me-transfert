@@ -1,37 +1,26 @@
 
-.success{
-    color:darkgreen;
-    border-color:darkgreen;
-    background-color: lightgreen;
-}
+:root{
+    --darkBG: rgb(20, 20, 20);
+    --darklightBG: rgb(70, 70, 70);
+    --darkFG: rgb(240, 240, 240);
+    --semidarkFG: rgb(201, 201, 201);
 
-.warning{
-    color:darkorange;
-    border-color:darkorange;
-    background-color: lightyellow;
-}
-
-.alert{
-    color:darkred;
-    border-color:darkred;
-    background-color: seashell;
-}
-
-.info{
-    color:darkblue;
-    border-color:darkblue;
-    background-color: lightblue;
-}
-
-.primary{
-    color:blue;
-    border-color:blue;
-    background-color: lightblue;
     
+
+
 }
 
-.secondary{
-    color:dimgray;
-    border-color:dimgray;
-    background-color: lightgray;
+
+@media (prefers-color-scheme: dark) {
+    html {
+        background-color: --darkBG;
+        // color;
+    }
+    body {
+
+    }
+
+}
+@media (prefers-color-scheme: light) {
+    
 }

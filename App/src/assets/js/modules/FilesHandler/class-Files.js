@@ -45,15 +45,15 @@ export class Files {
         
         file = new ExFile(file);
         let name = file.uri.split("/");
-        name = name[name.length - 1];
+        file.id = name[name.length - 1];
 
-        this.list.set(name, file);
+        this.list.set(file.id, file);
 
         console.log(file.async);
         if (file.async) file.save();
 
         for (const callable of this.suscribers) {
-            callable("set", name, file);
+            callable("set", file.id, file);
         }
     }
 

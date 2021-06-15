@@ -1,46 +1,22 @@
-.success {
-  color: darkgreen;
-  border-color: darkgreen;
-  background-color: lightgreen; }
+:root {
+  --darkBG: rgb(20, 20, 20);
+  --darklightBG: rgb(70, 70, 70);
+  --darkFG: rgb(240, 240, 240);
+  --semidarkFG: rgb(201, 201, 201); }
 
-.warning {
-  color: darkorange;
-  border-color: darkorange;
-  background-color: lightyellow; }
-
-.alert {
-  color: darkred;
-  border-color: darkred;
-  background-color: seashell; }
-
-.info {
-  color: darkblue;
-  border-color: darkblue;
-  background-color: lightblue; }
-
-.primary {
-  color: blue;
-  border-color: blue;
-  background-color: lightblue; }
-
-.secondary {
-  color: dimgray;
-  border-color: dimgray;
-  background-color: lightgray; }
-
+@media (prefers-color-scheme: dark) {
+  html {
+    background-color: --darkBG; } }
 body {
   margin: 0px;
   background: linear-gradient(lightgrey, dimgray);
   background-attachment: fixed;
   color: #333; }
 
-.core {
-  padding: 1em;
-  width: 80%;
-  margin: auto; }
-
 header > div,
+main > div,
 footer > div {
+  padding: 1em;
   background-color: gainsboro;
   color: #333; }
 
@@ -48,6 +24,7 @@ main > div {
   background-color: white; }
 
 form fieldset {
+  margin: 1em;
   background-color: lightgrey;
   border-color: white; }
 form label {
@@ -62,7 +39,7 @@ nav {
   position: sticky;
   background-color: lightslategray; }
   nav > div {
-    padding: 0em;
+    padding: 0em !important;
     width: 80%;
     margin: auto; }
     nav > div a {

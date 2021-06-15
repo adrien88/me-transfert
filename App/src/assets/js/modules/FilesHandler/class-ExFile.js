@@ -1,7 +1,6 @@
 export class ExFile {
-
-    constructor(file = null) {
-        if (null != file){
+    constructor(file = null) {    
+        if (null != file) {
             this.import(file);
         } else {
             this.file = new File();
@@ -10,15 +9,16 @@ export class ExFile {
 
     /**
      * Import file (from drag&drop or input form).
-     * 
+     *
      * @Param {File} file to load.
-     * 
+     *
      */
-    import(file){
-        if (file instanceof File){
+    import(file) {
+        if (file instanceof File) {
             this.file = file;
             this.uri = URL.createObjectURL(file);
             this.async = file.async;
+            this.url = file.url;
             this.name = file.name;
             this.type = file.type;
             this.lastMofified = file.lastMofified;
@@ -32,7 +32,6 @@ export class ExFile {
      * @param {string} uri [optional]
      */
     load(url = null) {
-
         target = this.url ?? url;
         fetch(target, {
             method: "GET",
@@ -47,6 +46,7 @@ export class ExFile {
             .then((data) => {
                 file = new File(data, uri);
                 file.uri = uri;
+
                 // FileList.set(file);
             })
             .catch((errors) => {
@@ -56,17 +56,17 @@ export class ExFile {
 
     /**
      * Unlink file on server
-     * 
+     *
      */
     async unlink() {
         if (null != this.url) {
-            this.url.replace("send", "delete");
-            data = new FormData();
-            data.append("uri", this.uri);
-            data.append("filename", this.filename);
-            data.append("type", this.type);
-            
-            return await fetch(this.url, {
+            let url = this.url.replace("send/", "delete/") + this.id;
+            let data = new FormData();
+            data.append("file.uri", this.uri);
+            data.append("file.name", this.name);
+            data.append("file.type", this.type);
+
+            return await fetch(url, {
                 method: "POST",
                 body: data,
             })
@@ -87,9 +87,10 @@ export class ExFile {
      */
     async save() {
         if (null != this.url) {
-            data = new FormData;
+            let url = this.url + "/" + this.id;
+            let data = new FormData();
             data.append("file.uri", this.uri);
-            data.append("file.filename", this.filename);
+            data.append("file.name", this.name);
             data.append("file.type", this.type);
             data.append("file.payload", this.file);
 
@@ -98,9 +99,7 @@ export class ExFile {
                 body: data,
             })
                 .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    }
+                    if (response.ok) return response.json();
                     else console.log("Network error : " + response.statusText);
                 })
                 .catch((errors) => {

@@ -54,7 +54,7 @@ export class FileListArea extends HTMLElement {
             let tr = document.createElement("tr");
 
             let td = document.createElement("td");
-            tr.innerText = "[action ]";
+            tr.innerText = "[action]";
             tr.appendChild(td);
 
             td = document.createElement("td");

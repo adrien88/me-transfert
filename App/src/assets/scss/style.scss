@@ -1,6 +1,4 @@
-@import "colors";
-@import "sizes";
-
+@import 'colors';
 body {
     margin: 0px;
     background: linear-gradient(lightgrey, dimgray);
@@ -8,15 +6,11 @@ body {
     color: #333;
 }
 
-.core {
-    padding: 1em;
-    width: 80%;
-    margin: auto;
-}
-
 header,
+main,
 footer {
     & > div {
+        padding: 1em;
         background-color: gainsboro;
         color: #333;
     }
@@ -30,6 +24,7 @@ main {
 
 form {
     fieldset {
+        margin:1em;
         background-color: lightgrey;
         border-color: white;
     }
@@ -51,13 +46,11 @@ form {
 nav {
     width: 100%;
     position: sticky;
-    // position: fixed;
-    // top: 0px;
-
+   
     background-color: lightslategray;
 
     & > div {
-        padding: 0em;
+        padding: 0em !important;
         width: 80%;
         margin: auto;
         a {

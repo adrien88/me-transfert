@@ -115,4 +115,12 @@ export class HTMLPopupElement extends HTMLElement {
         }
         return container;
     }
+
+    /**
+     * 
+     */
+    makeMovable(){
+
+        
+    }
 }

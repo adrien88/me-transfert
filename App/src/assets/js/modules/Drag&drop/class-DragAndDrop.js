@@ -1,4 +1,3 @@
-import { ExFile } from "../FilesHandler/class-ExFile.js";
 import { FileList } from "../FilesHandler/class-FileList.js";
 import { FileListArea } from "../FilesHandler/class-FileListArea.js";
 customElements.define("filelist-area", FileListArea);
