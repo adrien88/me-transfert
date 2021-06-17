@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '4671f4ac97904b8a0010c3867bbb6da48aa896d4',
+    'reference' => '694207a00541dea05d645de7ff98df11c987f32e',
     'name' => 'metransfert/metransfert',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '4671f4ac97904b8a0010c3867bbb6da48aa896d4',
+      'reference' => '694207a00541dea05d645de7ff98df11c987f32e',
     ),
     'phpmailer/phpmailer' => 
     array (
