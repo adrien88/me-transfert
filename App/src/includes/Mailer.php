@@ -9,7 +9,7 @@ use PHPMailer\PHPMailer\Exception;
 class Mailer
 {
 
-    static $mailer;
+    static $PHPMailer;
 
     /**
      * 
@@ -18,26 +18,26 @@ class Mailer
     {
         $this->mailer = new PHPMailer(true);
         $this->mailer->isSMTP();
-        $this->mailer->Host = $args['Host'] ?? 'ssl0.ovh.net';               //Adresse IP ou DNS du serveur SMTP
-        $this->mailer->Port = $args['port'] ?? 465;                          //Port TCP du serveur SMTP
+        $this->mailer->Host = $args['Host'] ?? null;               //Adresse IP ou DNS du serveur SMTP
+        $this->mailer->Port = $args['Port'] ?? null;                          //Port TCP du serveur SMTP
         if (isset($args['Auth'])) {
             $args = $args['Auth'];
-            $this->mailer->SMTPAuth = 1;                                                        //Utiliser l'identification
-            $this->mailer->SMTPSecure = $args['SMTPSecure'] ?? PHPMailer::ENCRYPTION_SMTPS;     //Protocole de sécurisation des échanges avec le SMTP
-            $this->mailer->Username   = $args['Username'] ?? 'login@ovh.net';                   //Adresse email à utiliser
-            $this->mailer->Password   = $args['Password'] ?? 'password';                        //Mot de passe de l'adresse email à utiliser
+            $this->mailer->SMTPAuth = true;                                                        //Utiliser l'identification
+            // $this->mailer->SMTPSecure = $args['SMTPSecure'];     //Protocole de sécurisation des échanges avec le SMTP
+            $this->mailer->Username   = $args['Username'];                   //Adresse email à utiliser
+            $this->mailer->Password   = $args['Password'];                        //Mot de passe de l'adresse email à utiliser
         }
     }
 
     /**
      * 
      */
-    static function getMailer(...$args): PHPMailer
+    static function getMailer(...$args)
     {
-        if (null == self::$mailer) {
-            self::$mailer = new self(...$args);
+        if (null == self::$PHPMailer) {
+            self::$PHPMailer = new self(...$args);
         }
-        return self::$mailer;
+        return self::$PHPMailer;
     }
 
     /**
@@ -45,7 +45,7 @@ class Mailer
      */
     function send(Mail $mail)
     {
-        if (null != self::$mailer) {
+        if (null != self::$PHPMailer) {
             $mailer = self::getMailer();
             $mailer->addAddress($mail->email, $mail->email_name);
             $mailer->isHTML($mail->isHtml);
