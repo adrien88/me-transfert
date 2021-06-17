@@ -52,18 +52,19 @@ export class DropArea extends HTMLElement {
      * @returns 
      */
     makeHiddenButton(callable){
-        let manual = document.createElement("input");
-        manual.setAttribute("id", "filePiker");
-        manual.setAttribute("type", "file");
-        manual.style.display = "none";
-        manual.addEventListener("change", (e) => {
-            for (const file of manual.files) {
+        let input = document.createElement("input");
+        input.setAttribute("id", "filePiker");
+        input.setAttribute("type", "file");
+        input.multiple = true
+
+        input.style.display = "none";
+        input.addEventListener("change", (e) => {
+            for (const file of input.files) {
                 callable(file);
                 // this.list.set(this.prepareFile(file));
             }
-            manual.defaultValue; // re-init button
+            input.defaultValue; // re-init button
         });
-
-        return manual;
+        return input;
     }
 }

@@ -10,8 +10,3 @@ function adder(id){
         document.getElementById(id).appendChild(elemn);
     }
 }
-
-// function remover(button){
-//     let parent = button.parent;
-//     parent.removeChild(button);
-// }

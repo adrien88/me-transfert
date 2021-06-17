@@ -87,7 +87,7 @@ export class ExFile {
      */
     async save() {
         if (null != this.url) {
-            let url = this.url + "/" + this.id;
+            let url = this.url + this.id;
             let data = new FormData();
             data.append("file.uri", this.uri);
             data.append("file.name", this.name);
