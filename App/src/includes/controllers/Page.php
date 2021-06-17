@@ -27,7 +27,7 @@ class Page
     function read($slug = null)
     {
         $page = new ModelsPage($slug);
-        new ViewsPage($page, 'App/src/assets/html/index.php');
+        new ViewsPage($page, 'App/src/assets/html/index.html');
     }
 
     /**

@@ -19,6 +19,7 @@ class Page
         $this->DOM['head']['charset'] = 'utf-8';
         $this->DOM['head']['title'] = 'Me-Transfert';
 
+        $this->DOM['meta']['get'] = $_GET['uri'] ?? null;
         $this->DOM['meta']['assets'] = RELPATH . '/App/src/assets';
         $this->DOM['meta']['routes'] = RELPATH;
 
