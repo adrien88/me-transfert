@@ -6,7 +6,7 @@ use App\Router\Route;
 use App\models\User as ModelsUser;
 
 #[Route('User/')]
-class Page
+class User
 {
     function __construct()
     {
