@@ -7,18 +7,26 @@ use Exception;
 
 trait DataFile
 {
-    private string $folder;
+
+    /**
+     * @var string $folder Folder
+     */
+    private $folder = 'App/data/';
+
+    /**
+     * @var string $filename 
+     */
     public string $filename = 'default.txt';
 
     /**
      * 
      */
-    function init(string $objname = '')
+    function init(?string $filename = null)
     {
-        $this->filename = $objname;
+        if (null !== $filename)
+            $this->filename = $filename;
         $this->makefolder();
         if (!$this->load()) {
-            $this->menu = '';
             $this->created = time();
         }
     }
@@ -27,17 +35,19 @@ trait DataFile
      * Save data in file
      * 
      */
-    function save()
+    function save(): bool
     {
         $path = $this->folder . $this->filename . '.json';
         $data = json_encode(get_object_vars($this), JSON_PRETTY_PRINT);
-        return file_put_contents($path, $data);
+        $bool = (bool) file_put_contents($path, $data);
+        chmod($path, 0777);
+        return $bool;
     }
 
     /**
      * 
      */
-    function load()
+    function load(): bool
     {
         $path = $this->folder . $this->filename . '.json';
         if (file_exists($path)) {
@@ -53,7 +63,7 @@ trait DataFile
     /**
      * 
      */
-    function exist()
+    function exist(): bool
     {
         $path = $this->folder . $this->filename . '.json';
         return file_exists($path);
@@ -62,7 +72,7 @@ trait DataFile
     /**
      * 
      */
-    function unlink()
+    function delete(): void
     {
         $path = $this->folder . $this->filename . '.json';
         if ($this->exist()) {
@@ -73,19 +83,21 @@ trait DataFile
     /**
      * 
      */
-    static function list()
+    static function list(): array
     {
-        $folder = 'App/data/' . str_replace('\\', '-', get_class()) . '/*';
-        return glob($folder);
+        $folder = 'App/data/' . str_replace('\\', '-', get_class()) . '/';
+        if (false !== ($list = scandir($folder)))
+            return $list;
+        else return [];
     }
 
     /**
      * 
      */
-    function makefolder()
+    function makefolder(): void
     {
-        $this->folder = 'App/data/' . str_replace('\\', '-', get_class()) . '/';
-        if (!file_exists($this->folder) && !mkdir($this->folder, 0766, true)) {
+        $this->folder .= str_replace('\\', '-', get_class()) . '/';
+        if (!file_exists($this->folder) && !mkdir($this->folder, 0777, true)) {
             throw new Exception('Impossible de créer le dossier');
         }
     }
